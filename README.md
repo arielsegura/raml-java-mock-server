@@ -1,4 +1,4 @@
-# RAML Mock Server for Java [![Build Status](https://travis-ci.org/arielsegura/raml-java-mock-server.svg?branch=master)](https://travis-ci.org/arielsegura/raml-java-mock-server)
+# RAML Mock Server for Java [![Build Status](https://travis-ci.org/arielsegura/raml-java-mock-server.svg?branch=master)](https://travis-ci.org/arielsegura/raml-java-mock-server) [![Coverage Status](https://coveralls.io/repos/github/arielsegura/raml-java-mock-server/badge.svg?branch=master)](https://coveralls.io/github/arielsegura/raml-java-mock-server?branch=master)
 
 Mock server that uses [WireMock] (https://github.com/tomakehurst/wiremock) and [RAML Parser] (https://github.com/raml-org/raml-java-parser) to configure a mocked API based on the examples provided in RAML. 
 
