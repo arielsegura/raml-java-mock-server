@@ -1,0 +1,90 @@
+#%RAML 0.8
+title: My API
+baseUri: https://localhost:8080
+documentation:
+ - title:  My API
+   content: |
+     Welcome to My API Documentation.
+version: 0.1
+/v1:
+  description: API Version
+  /employees:
+    description: Collection of employees
+    /{employeeId}:
+      description: Single employee identified by id
+      uriParameters:
+        employeeId:
+          description: Employee id
+          type: string
+      /address:
+        description: This endpoint retrieves employee's address
+        get:
+          description: Retrieves address
+          responses:
+            200:
+              description: Address generated
+              body:
+                application/json:
+                  example:
+                    |
+                      {
+                        "street": "9 de Julio",
+                        "city": "Buenos Aires",
+                        "number": "4352"
+                      }
+      /phones:
+        description: This endpoint retrieves employee's corp phones
+        get:
+          description: Retrieves phones
+          responses:
+            200:
+              description: Phones generated
+              body:
+                application/json:
+                  example:
+                    |
+                      [
+                        {
+                          "phoneId": "012001012",
+                          "city": "Buenos Aires",
+                          "number": "116442323"
+                        }
+                      ]
+            404:
+              description: Employee not found
+              body:
+                application/json:
+                  example:
+                    |
+                      {
+                        "error": "employee not found."
+                      }
+        /{phoneId}:
+          description: Single phone identified by id
+          uriParameters:
+            phoneId:
+              description: Phone id
+              type: string
+          get:
+            description: Retrieves phone
+            responses:
+              200:
+                description: Phone generated
+                body:
+                  application/json:
+                    example:
+                      |
+                        {
+                          "phoneId": "012001012",
+                          "city": "Buenos Aires",
+                          "number": "116442323"
+                        }
+              404:
+                description: Phone not found
+                body:
+                  application/json:
+                    example:
+                      |
+                        {
+                          "error": "phone not found."
+                        }
