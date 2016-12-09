@@ -1,6 +1,4 @@
-package org.raml.mockserver.api.requestmapping;
-
-import org.raml.mockserver.internal.ResourceMap;
+package org.ramlmock.mockserver.api.requestmapping;
 
 /**
  * Created by arielsegura on 12/8/16.

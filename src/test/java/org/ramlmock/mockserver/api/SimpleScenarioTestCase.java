@@ -1,8 +1,6 @@
-package org.raml.mockserver.api;
+package org.ramlmock.mockserver.api;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package org.raml.mockserver.api.requestmapping;
+package org.ramlmock.mockserver.api.requestmapping;
 
-import org.raml.mockserver.internal.ResourceMap;
+import org.ramlmock.mockserver.internal.ResourceMap;
 
 import java.util.HashMap;
 import java.util.Map;

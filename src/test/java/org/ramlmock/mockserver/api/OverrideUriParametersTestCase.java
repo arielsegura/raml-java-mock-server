@@ -1,13 +1,13 @@
-package org.raml.mockserver.api;
+package org.ramlmock.mockserver.api;
 
 import feign.FeignException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.raml.mockserver.api.requestmapping.RequestMapping;
-import org.raml.mockserver.api.requestmapping.RequestMappingBuilder;
-import org.raml.mockserver.api.requestmapping.UriParameters;
-import org.raml.mockserver.internal.RequestMappingBuilderImpl;
+import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
+import org.ramlmock.mockserver.api.requestmapping.RequestMappingBuilder;
+import org.ramlmock.mockserver.api.requestmapping.UriParameters;
+import org.ramlmock.mockserver.internal.RequestMappingBuilderImpl;
 
 import java.util.List;
 

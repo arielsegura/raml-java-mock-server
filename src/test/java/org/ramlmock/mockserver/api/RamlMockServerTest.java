@@ -1,4 +1,4 @@
-package org.raml.mockserver.api;
+package org.ramlmock.mockserver.api;
 
 import feign.Feign;
 import feign.Param;

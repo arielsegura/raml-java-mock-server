@@ -1,4 +1,4 @@
-package org.raml.mockserver.api.requestmapping;
+package org.ramlmock.mockserver.api.requestmapping;
 
 import java.util.HashMap;
 import java.util.Set;

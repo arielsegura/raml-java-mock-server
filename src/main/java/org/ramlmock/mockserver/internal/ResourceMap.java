@@ -1,6 +1,6 @@
-package org.raml.mockserver.internal;
+package org.ramlmock.mockserver.internal;
 
-import org.raml.mockserver.api.requestmapping.UriParameters;
+import org.ramlmock.mockserver.api.requestmapping.UriParameters;
 
 import java.util.HashMap;
 import java.util.Optional;

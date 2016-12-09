@@ -1,8 +1,8 @@
-package org.raml.mockserver.internal;
+package org.ramlmock.mockserver.internal;
 
-import org.raml.mockserver.api.requestmapping.RequestMapping;
-import org.raml.mockserver.api.requestmapping.RequestMappingBuilder;
-import org.raml.mockserver.api.requestmapping.UriParameters;
+import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
+import org.ramlmock.mockserver.api.requestmapping.RequestMappingBuilder;
+import org.ramlmock.mockserver.api.requestmapping.UriParameters;
 
 /**
  * Created by arielsegura on 12/8/16.

@@ -1,12 +1,12 @@
-package org.raml.mockserver.api;
+package org.ramlmock.mockserver.api;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.common.base.Preconditions;
-import org.raml.mockserver.api.requestmapping.RequestMapping;
-import org.raml.mockserver.api.requestmapping.UriParameters;
-import org.raml.mockserver.internal.ResourceMap;
+import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
+import org.ramlmock.mockserver.api.requestmapping.UriParameters;
+import org.ramlmock.mockserver.internal.ResourceMap;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.common.ValidationResult;
