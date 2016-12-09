@@ -6,7 +6,7 @@
 
     <groupId>org.ramlmock</groupId>
     <artifactId>raml-java-mock-server</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <feign.version>8.18.0</feign.version>
