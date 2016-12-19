@@ -21,12 +21,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import ramlmockserver.api.requestmapping.RequestMapping;
-import ramlmockserver.api.requestmapping.RequestMappingBuilder;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static ramlmockserver.api.requestmapping.RequestMappingBuilder.requestMappingBuilder;
+import static ramlmockserver.api.requestmapping.RequestMappingBuilder.resourceConfig;
+import static ramlmockserver.api.requestmapping.RequestMappingBuilder.uriParameter;
 
 
 /**
@@ -42,9 +43,9 @@ public class OverrideUriParametersTestCase extends RamlMockServerTest{
 
         RequestMapping requestMapping =
                 requestMappingBuilder().
-                        addResource("/v1/employees/{employeeId}/phones", RequestMappingBuilder.resourceConfig()
-                                .configureStatusCode(404, RequestMappingBuilder.uriParameter("employeeId", invalidEmployeeId))
-                                .configureStatusCode(200, RequestMappingBuilder.uriParameter("employeeId", employeeId))
+                        addResource("/v1/employees/{employeeId}/phones", resourceConfig()
+                                .configureStatusCode(404, uriParameter("employeeId", invalidEmployeeId))
+                                .configureStatusCode(200, uriParameter("employeeId", employeeId))
                                 .build())
                 .build();
 
@@ -74,19 +75,19 @@ public class OverrideUriParametersTestCase extends RamlMockServerTest{
         RequestMapping requestMapping =
         requestMappingBuilder()
                 .addResource("/v1/employees/{employeeId}/phones",
-                        RequestMappingBuilder.resourceConfig()
-                                .configureStatusCode(404, RequestMappingBuilder.uriParameter("employeeId", invalidEmployeeId))
-                                .configureStatusCode(200, RequestMappingBuilder.uriParameter("employeeId", employeeId))
+                        resourceConfig()
+                                .configureStatusCode(404, uriParameter("employeeId", invalidEmployeeId))
+                                .configureStatusCode(200, uriParameter("employeeId", employeeId))
                                 .build())
                 .addResource("/v1/employees/{employeeId}/phones/{phoneId}",
-                        RequestMappingBuilder.resourceConfig()
+                        resourceConfig()
                                 .configureStatusCode(404,
-                                        RequestMappingBuilder.uriParameter("employeeId", employeeId),
-                                        RequestMappingBuilder.uriParameter("phoneId", invalidPhoneId)
+                                        uriParameter("employeeId", employeeId),
+                                        uriParameter("phoneId", invalidPhoneId)
                                 )
                                 .configureStatusCode(200,
-                                        RequestMappingBuilder.uriParameter("employeeId", employeeId),
-                                        RequestMappingBuilder.uriParameter("phoneId", phoneId)
+                                        uriParameter("employeeId", employeeId),
+                                        uriParameter("phoneId", phoneId)
                                 )
                                 .build())
                 .build();
@@ -140,9 +141,9 @@ public class OverrideUriParametersTestCase extends RamlMockServerTest{
     public void okResponseShouldBeUsedIfErrorResponseIsNotOverwritten() {
         RequestMapping requestMapping =
                 requestMappingBuilder().
-                        addResource("/v1/employees/{employeeId}/phones/{phoneId}", RequestMappingBuilder.resourceConfig()
-                                .configureStatusCode(404, RequestMappingBuilder.uriParameter("phoneId", invalidPhoneId))
-                                .configureStatusCode(200, RequestMappingBuilder.uriParameter("phoneId", phoneId))
+                        addResource("/v1/employees/{employeeId}/phones/{phoneId}", resourceConfig()
+                                .configureStatusCode(404, uriParameter("phoneId", invalidPhoneId))
+                                .configureStatusCode(200, uriParameter("phoneId", phoneId))
                                 .build())
                         .build();
 
@@ -159,9 +160,9 @@ public class OverrideUriParametersTestCase extends RamlMockServerTest{
 
         RequestMapping requestMapping =
                 requestMappingBuilder().
-                        addResource("/v1/employees/{employeeId}/phones/{phoneId}", RequestMappingBuilder.resourceConfig()
-                                .configureStatusCode(404, RequestMappingBuilder.uriParameter("phoneId", invalidPhoneId))
-                                .configureStatusCode(200, RequestMappingBuilder.uriParameter("phoneId", phoneId))
+                        addResource("/v1/employees/{employeeId}/phones/{phoneId}", resourceConfig()
+                                .configureStatusCode(404, uriParameter("phoneId", invalidPhoneId))
+                                .configureStatusCode(200, uriParameter("phoneId", phoneId))
                                 .build())
                         .build();
 
