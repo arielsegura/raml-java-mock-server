@@ -20,7 +20,7 @@ import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.common.base.Preconditions;
 import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
-import org.ramlmock.mockserver.api.requestmapping.UriParameters;
+import org.ramlmock.mockserver.internal.UriParameter;
 import org.ramlmock.mockserver.internal.ResourceMap;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
@@ -190,14 +190,14 @@ public class RamlMockServer extends WireMockServer{
             Optional<ResourceMap> resourceMapOptional = requestMapping.getResource(resourcePath);
             if(resourceMapOptional.isPresent()) {
                 ResourceMap resourceMap = resourceMapOptional.get();
-                Optional<UriParameters> uriParametersOptional = resourceMap.getStatusCode(statusCode);
+                Optional<UriParameter[]> uriParametersOptional = resourceMap.getStatusCode(statusCode);
                 if (uriParametersOptional.isPresent()) {
-                    UriParameters uriParameters = uriParametersOptional.get();
+                    UriParameter[] uriParameters = uriParametersOptional.get();
 
-                    for(String paramName : uriParameters.keys()){
-                        String value = uriParameters.get(paramName);
-                        resourcePath = resourcePath.replace(format("{%s}", paramName), value);
+                    for(UriParameter uriParameter : uriParameters){
+                        resourcePath = resourcePath.replace(format("{%s}", uriParameter.getKey()), uriParameter.getValue());
                     }
+
                     return getPathAsRegex(resourcePath);
                 }
             }

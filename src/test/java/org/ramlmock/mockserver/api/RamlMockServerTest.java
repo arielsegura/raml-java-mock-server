@@ -15,7 +15,6 @@
  */
 package org.ramlmock.mockserver.api;
 
-import feign.Body;
 import feign.Feign;
 import feign.Param;
 import feign.RequestLine;

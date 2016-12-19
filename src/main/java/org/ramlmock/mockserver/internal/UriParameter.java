@@ -13,25 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ramlmock.mockserver.api.requestmapping;
+package org.ramlmock.mockserver.internal;
+
+import java.util.AbstractMap;
 
 /**
- * Created by arielsegura on 12/8/16.
+ * Created by Ariel on 18/12/2016.
  */
-public interface RequestMappingBuilder {
-
-    RequestMapping build();
-
-    RequestMappingBuilder addResource(String resource);
-
-    StatusCodeBuilder forStatusCode(Integer statusCode);
-
-    interface StatusCodeBuilder {
-        ResourceMapBuilder useParameters(UriParameters uriParameters);
+public final class UriParameter extends AbstractMap.SimpleEntry<String, String> {
+    public UriParameter(String key, String value) {
+        super(key, value);
     }
-
-    interface ResourceMapBuilder {
-        StatusCodeBuilder forStatusCode(Integer statusCode);
-    }
-
 }

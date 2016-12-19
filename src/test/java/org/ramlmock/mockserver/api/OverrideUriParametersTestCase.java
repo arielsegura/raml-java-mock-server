@@ -16,19 +16,20 @@
 package org.ramlmock.mockserver.api;
 
 import feign.FeignException;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
-import org.ramlmock.mockserver.api.requestmapping.RequestMappingBuilder;
-import org.ramlmock.mockserver.api.requestmapping.UriParameters;
-import org.ramlmock.mockserver.internal.RequestMappingBuilderImpl;
+import org.ramlmock.mockserver.internal.RequestMappingBuilder;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import static org.ramlmock.mockserver.internal.RequestMappingBuilder.requestMappingBuilder;
+import static org.ramlmock.mockserver.internal.RequestMappingBuilder.resourceConfig;
+import static org.ramlmock.mockserver.internal.RequestMappingBuilder.uriParameter;
+
 
 /**
  * Created by arielsegura on 12/9/16.
@@ -36,20 +37,19 @@ import static org.junit.Assert.fail;
 @RunWith(Parameterized.class)
 public class OverrideUriParametersTestCase extends RamlMockServerTest{
 
+    private RamlMockServer classUnderTest;
+
     @Test
     public void twoStatusCodePhones() {
-        RequestMappingBuilder requestMappingBuilder = new RequestMappingBuilderImpl();
-        requestMappingBuilder
-                .addResource("/v1/employees/{employeeId}/phones")
-                .forStatusCode(404).useParameters(
-                new UriParameters()
-                        .add("employeeId", invalidEmployeeId)
-        ).forStatusCode(200).useParameters(
-                new UriParameters()
-                        .add("employeeId", employeeId)
-        );
-        RequestMapping requestMapping = requestMappingBuilder
+
+        RequestMapping requestMapping =
+                requestMappingBuilder().
+                        addResource("/v1/employees/{employeeId}/phones", resourceConfig()
+                                .configureStatusCode(404, uriParameter("employeeId", invalidEmployeeId))
+                                .configureStatusCode(200, uriParameter("employeeId", employeeId))
+                                .build())
                 .build();
+
         RamlMockServer classUnderTest = new RamlMockServer(requestMapping, "two-status-code/api.raml");
         SimpleScenarioClient client = SimpleScenarioClient.connect(classUnderTest);
 
@@ -69,47 +69,105 @@ public class OverrideUriParametersTestCase extends RamlMockServerTest{
             assertTrue(ex.getMessage().contains("employee not found."));
         }
 
-        classUnderTest.shutdown();
     }
 
     @Test
-    public void okResponseShouldBeUsedIfErrorResponseIsNotOverwritten() {
-        RequestMappingBuilder requestMappingBuilder = new RequestMappingBuilderImpl();
-        requestMappingBuilder
-                .addResource("/v1/employees/{employeeId}/phones/{phoneId}")
-                .forStatusCode(404).useParameters(
-                new UriParameters()
-                        .add("phoneId", invalidPhoneId)
-        ).forStatusCode(200).useParameters(
-                new UriParameters()
-                        .add("phoneId", phoneId)
-        );
-        RequestMapping requestMapping = requestMappingBuilder
+    public void overrideManyEndpoints() {
+        RequestMapping requestMapping =
+        requestMappingBuilder()
+                .addResource("/v1/employees/{employeeId}/phones",
+                        resourceConfig()
+                                .configureStatusCode(404, uriParameter("employeeId", invalidEmployeeId))
+                                .configureStatusCode(200, uriParameter("employeeId", employeeId))
+                                .build())
+                .addResource("/v1/employees/{employeeId}/phones/{phoneId}",
+                        resourceConfig()
+                                .configureStatusCode(404,
+                                        uriParameter("employeeId", employeeId),
+                                        uriParameter("phoneId", invalidPhoneId)
+                                )
+                                .configureStatusCode(200,
+                                        uriParameter("employeeId", employeeId),
+                                        uriParameter("phoneId", phoneId)
+                                )
+                                .build())
                 .build();
+
+        RamlMockServer classUnderTest = new RamlMockServer(requestMapping, "two-status-code/api.raml");
+
+        SimpleScenarioClient client = SimpleScenarioClient.connect(classUnderTest);
+
+        // test employee
+        try{
+            client.phones(invalidEmployeeId);
+            fail();
+        } catch (FeignException ex){
+            assertEquals(404, ex.status());
+        }
+
+        try{
+            List<Phone> phones = client.phones(employeeId);
+            assertFalse(phones.isEmpty());
+        } catch (FeignException ex){
+            fail();
+        }
+
+        // test phone
+        try{
+            Phone phone = client.phoneById(employeeId, invalidPhoneId);
+            fail();
+        } catch (FeignException ex){
+            assertEquals(404, ex.status());
+        }
+
+        try{
+            Phone phone = client.phoneById(employeeId, phoneId);
+            assertEquals("012001012", phone.getPhoneId());
+            assertEquals("Buenos Aires", phone.getCity());
+            assertEquals("116442323", phone.getNumber());
+        } catch (FeignException ex){
+            fail();
+        }
+
+    }
+
+    private void assertNotFound(FeignException ex) {
+        assertEquals(404, ex.status());
+        assertTrue(ex.getMessage().contains("error"));
+        assertTrue(ex.getMessage().contains("not found."));
+    }
+
+    @Test
+
+    public void okResponseShouldBeUsedIfErrorResponseIsNotOverwritten() {
+        RequestMapping requestMapping =
+                requestMappingBuilder().
+                        addResource("/v1/employees/{employeeId}/phones/{phoneId}", resourceConfig()
+                                .configureStatusCode(404, uriParameter("phoneId", invalidPhoneId))
+                                .configureStatusCode(200, uriParameter("phoneId", phoneId))
+                                .build())
+                        .build();
+
         RamlMockServer classUnderTest = new RamlMockServer(requestMapping, "two-status-code/api.raml");
 
         SimpleScenarioClient client = SimpleScenarioClient.connect(classUnderTest);
 
         assertEquals(client.phones(employeeId), client.phones(invalidEmployeeId));
 
-        classUnderTest.shutdown();
     }
 
     @Test
     public void twoStatusCodePhoneId() {
-        RequestMappingBuilder requestMappingBuilder = new RequestMappingBuilderImpl();
-        requestMappingBuilder
-                .addResource("/v1/employees/{employeeId}/phones/{phoneId}")
-                .forStatusCode(404).useParameters(
-                new UriParameters()
-                        .add("phoneId", invalidPhoneId)
-        ).forStatusCode(200).useParameters(
-                new UriParameters()
-                        .add("phoneId", phoneId)
-        );
-        RequestMapping requestMapping = requestMappingBuilder
-                .build();
-        RamlMockServer classUnderTest = new RamlMockServer(requestMapping, "two-status-code/api.raml");
+
+        RequestMapping requestMapping =
+                requestMappingBuilder().
+                        addResource("/v1/employees/{employeeId}/phones/{phoneId}", resourceConfig()
+                                .configureStatusCode(404, uriParameter("phoneId", invalidPhoneId))
+                                .configureStatusCode(200, uriParameter("phoneId", phoneId))
+                                .build())
+                        .build();
+
+        classUnderTest = new RamlMockServer(requestMapping, "two-status-code/api.raml");
 
         SimpleScenarioClient client = SimpleScenarioClient.connect(classUnderTest);
 
@@ -123,11 +181,15 @@ public class OverrideUriParametersTestCase extends RamlMockServerTest{
             client.phoneById(employeeId, invalidPhoneId);
             fail();
         } catch (FeignException ex){
-            assertEquals(404, ex.status());
-            assertTrue(ex.getMessage().contains("error"));
-            assertTrue(ex.getMessage().contains("phone not found."));
+            assertNotFound(ex);
         }
 
-        classUnderTest.shutdown();
+
+    }
+
+    @After
+    public void shutDown(){
+        if(classUnderTest != null)
+            classUnderTest.shutdown();
     }
 }

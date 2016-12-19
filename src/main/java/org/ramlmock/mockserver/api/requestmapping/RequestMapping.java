@@ -35,4 +35,5 @@ public class RequestMapping {
     public void addResource(String resource, ResourceMap resourceMap) {
         resources.put(resource, resourceMap);
     }
+
 }
