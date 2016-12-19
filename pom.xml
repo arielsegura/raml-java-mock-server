@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ramlmock</groupId>
+    <groupId>io.github.arielsegura</groupId>
     <artifactId>raml-java-mock-server</artifactId>
     <version>0.8-SNAPSHOT</version>
     <inceptionYear>2016</inceptionYear>
