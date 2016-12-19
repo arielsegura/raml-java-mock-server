@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ramlmock.mockserver.internal;
+package ramlmockserver.internal;
 
 import java.util.AbstractMap;
 

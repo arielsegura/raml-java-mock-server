@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ramlmock.mockserver.api.requestmapping;
+package ramlmockserver.api.requestmapping;
 
-import org.ramlmock.mockserver.internal.ResourceMap;
-import org.ramlmock.mockserver.internal.UriParameter;
+import ramlmockserver.internal.ResourceMap;
+import ramlmockserver.internal.UriParameter;
 
 
 /**

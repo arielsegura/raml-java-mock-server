@@ -13,22 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ramlmock.mockserver.internal;
+package ramlmockserver.api.requestmapping;
+
+import ramlmockserver.internal.ResourceMap;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
  * Created by arielsegura on 12/8/16.
  */
-public class ResourceMap {
-    private HashMap<Integer, UriParameter[]> content = new HashMap<>();
+public class RequestMapping {
 
-    public Optional<UriParameter[]> getStatusCode(int statusCode){
-        return Optional.ofNullable(content.get(statusCode));
+    private Map<String, ResourceMap> resources = new HashMap<>();
+
+    public Optional<ResourceMap> getResource(String name){
+        return Optional.ofNullable(resources.get(name));
     }
 
-    public void add(Integer statusCode, UriParameter... uriParameters){
-        content.put(statusCode, uriParameters);
+    public void addResource(String resource, ResourceMap resourceMap) {
+        resources.put(resource, resourceMap);
     }
+
 }

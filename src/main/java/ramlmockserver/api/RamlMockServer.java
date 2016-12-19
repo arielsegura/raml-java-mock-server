@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ramlmock.mockserver.api;
+package ramlmockserver.api;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.google.common.base.Preconditions;
-import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
-import org.ramlmock.mockserver.internal.UriParameter;
-import org.ramlmock.mockserver.internal.ResourceMap;
+import ramlmockserver.api.requestmapping.RequestMapping;
+import ramlmockserver.internal.UriParameter;
+import ramlmockserver.internal.ResourceMap;
 import org.raml.v2.api.RamlModelBuilder;
 import org.raml.v2.api.RamlModelResult;
 import org.raml.v2.api.model.common.ValidationResult;
@@ -45,6 +45,7 @@ import static java.lang.String.format;
 /**
  * Created by arielsegura on 12/8/16.
  */
+//TODO add builder
 public class RamlMockServer extends WireMockServer{
 
     private final Logger logger = LoggerFactory.getLogger(RamlMockServer.class);
