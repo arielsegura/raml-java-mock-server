@@ -8,12 +8,15 @@
     <inceptionYear>2016</inceptionYear>
 
     <properties>
-        <feign.version>8.18.0</feign.version>
         <wiremock.version>2.2.1</wiremock.version>
         <raml-parser.version>1.0.3</raml-parser.version>
-        <sl4j.version>1.7.12</sl4j.version>
-        <junit.version>4.12</junit.version>
         <java.version>1.8</java.version>
+        <sl4j.version>1.7.12</sl4j.version>
+
+        <!--Test-->
+        <junit.version>4.12</junit.version>
+        <feign.version>8.18.0</feign.version>
+        <log4j-slf4j-impl.version>2.1</log4j-slf4j-impl.version>
     </properties>
 
     <dependencies>
@@ -61,13 +64,13 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.1</version>
+            <version>${log4j-slf4j-impl.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.1</version>
+            <version>${log4j-slf4j-impl.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
