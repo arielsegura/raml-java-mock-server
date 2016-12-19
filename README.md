@@ -41,34 +41,24 @@ So for instance, for these responses:
 ```
 Only the one with status code 200 will be mocked. If you want to test or mock the API including the status code you need to provide both valid and invalid uri parameters for the resource: 
 ```java
-RequestMappingBuilder requestMappingBuilder = new RequestMappingBuilderImpl();
-requestMappingBuilder
-        .addResource("/v1/employees/{employeeId}/phones")
-        .forStatusCode(404).useParameters(
-        new UriParameters()
-                .add("employeeId", invalidEmployeeId)
-).forStatusCode(200).useParameters(
-        new UriParameters()
-                .add("employeeId", employeeId)
-);
-RequestMapping requestMapping = requestMappingBuilder
-        .build();
-RamlMockServer classUnderTest = new RamlMockServer(requestMapping, pathToRaml);
+RequestMapping requestMapping =
+    requestMappingBuilder().
+        addResource("/v1/employees/{employeeId}/phones", resourceConfig()
+              .configureStatusCode(404, uriParameter("employeeId", invalidEmployeeId))
+              .configureStatusCode(200, uriParameter("employeeId", employeeId))
+              .build())
+    .build();
+RamlMockServer ramlMockServer = new RamlMockServer(requestMapping, pathToRaml);
 ```
 If you still have nested resources with uri parameters you don't need to override every uri parameter: 
 ```java
-RequestMappingBuilder requestMappingBuilder = new RequestMappingBuilderImpl();
-requestMappingBuilder
-        .addResource("/v1/employees/{employeeId}/phones/{phoneId}")
-        .forStatusCode(404).useParameters(
-        new UriParameters()
-                .add("phoneId", invalidPhoneId)
-).forStatusCode(200).useParameters(
-        new UriParameters()
-                .add("phoneId", phoneId)
-);
-RequestMapping requestMapping = requestMappingBuilder
+RequestMapping requestMapping =
+    requestMappingBuilder().
+        addResource("/v1/employees/{employeeId}/phones/{phoneId}", resourceConfig()
+              .configureStatusCode(404, uriParameter("phoneId", invalidPhoneId))
+              .configureStatusCode(200, uriParameter("phoneId", phoneId))
+              .build())
         .build();
-RamlMockServer classUnderTest = new RamlMockServer(requestMapping, pathToRaml);
+RamlMockServer ramlMockServer = new RamlMockServer(requestMapping, pathToRaml);
 ```
 In this case, `{employeeId}` will match with any input you send, but `{phoneId}` will only send 200 with `phoneId`. 
