@@ -21,14 +21,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.ramlmock.mockserver.api.requestmapping.RequestMapping;
-import org.ramlmock.mockserver.internal.RequestMappingBuilder;
 
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.ramlmock.mockserver.internal.RequestMappingBuilder.requestMappingBuilder;
-import static org.ramlmock.mockserver.internal.RequestMappingBuilder.resourceConfig;
-import static org.ramlmock.mockserver.internal.RequestMappingBuilder.uriParameter;
+import static org.ramlmock.mockserver.api.requestmapping.RequestMappingBuilder.requestMappingBuilder;
+import static org.ramlmock.mockserver.api.requestmapping.RequestMappingBuilder.resourceConfig;
+import static org.ramlmock.mockserver.api.requestmapping.RequestMappingBuilder.uriParameter;
 
 
 /**
